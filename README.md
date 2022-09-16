@@ -48,7 +48,7 @@ basically we want something to run our codec at startup. The way to do that is t
 
 ```console
 $ git clone https://github.com/dankeyy/inc-dec-py
-$ cp inc-dec-py/incdec.py inc-dec-pyincdec_loader.pth <path-to-site_packages>/
+$ cp inc-dec-py/incdec.py inc-dec-py/incdec_loader.pth <path-to-site_packages>/
 ```
 And that's it really. Just move those two files to the site_packages of your liking. Now you can make a new file, put the comment `#coding: incdec` on the first or second line, and you should be good to go (of course run with the same interpreter to which's site_packages you added the codec to).
 
