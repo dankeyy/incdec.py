@@ -1,7 +1,7 @@
 # inc-dec-py
 C-style increment and decrement operators for python.
 
-🔴 Please Notice - using this will override the call `x.__pos__().__pos__()` for `++x` 
+🔴 Note - using this will override the call `x.__pos__().__pos__()` for `++x` 
 and `x.__neg__().__neg__()` for `--x`. 🔴\
 If, for some reason, you wish to achieve said predominant behaviour whilst using this cursed code, you can use `+(+x)` `-(-x)` respectively.\
 Also note the above doesn't apply to `x++`, `x--`, as those regularly raise `SyntaxError`.
