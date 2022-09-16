@@ -30,7 +30,7 @@ def transform(string, decode_mode):
         lambda symbol: "(({0}, {0} := {0}-1)[1])".format(symbol), # --a
     ]
 
-    lines = []
+    lines = "" if decode_mode else b""
 
     for line in string.splitlines(keepends=True):
         for pattern, replacement in zip(patterns, replacements):
@@ -42,14 +42,9 @@ def transform(string, decode_mode):
                     symbol = captured.strip("-+")
                     line = re.sub(exact_pattern, replacement(symbol), line)
 
-        lines.append(line.encode() if not decode_mode else line)
+        lines += line.encode() if not decode_mode else line #type: ignore
 
-    if decode_mode:
-        text = "".join(lines)
-        return text, len(text)
-    else:
-        text = b"".join(lines)
-        return text
+    return (lines, len(lines)) if decode_mode else lines
 
 
 decoder = functools.partial(transform, decode_mode=True)
