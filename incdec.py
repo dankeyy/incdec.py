@@ -4,17 +4,17 @@ import encodings
 import functools
 
 
-def base_replacement(string, decode_mode):
+def transform(string, decode_mode):
     string = bytes(string).decode("utf-8")
 
     postfix_pluses  = r"\w+\+\+"
     prefix_pluses   = r"\+\+\w+"
     postfix_minuses = r"\w+\-\-"
     prefix_minuses  = r"\-\-\w+"
-    base = lambda doesnt_capture, captures: '["\'].*{}.*["\']|{}'.format(doesnt_capture, captures)
+    base_regexp = lambda doesnt_capture, captures: '["\'].*{}.*["\']|{}'.format(doesnt_capture, captures)
 
     patterns = [
-        re.compile(base(doesnt_capture, captures))
+        re.compile(base_regexp(doesnt_capture, captures))
         for captures, doesnt_capture in (
                 (f"({postfix_pluses})",  postfix_pluses ), # a++
                 (f"({prefix_pluses})",   prefix_pluses  ), # ++a
@@ -52,8 +52,8 @@ def base_replacement(string, decode_mode):
         return text
 
 
-decoder = functools.partial(base_replacement, decode_mode=True)
-encoder = functools.partial(base_replacement, decode_mode=False)
+decoder = functools.partial(transform, decode_mode=True)
+encoder = functools.partial(transform, decode_mode=False)
 
 
 class IncrementalDecoder(encodings.utf_8.IncrementalDecoder):
@@ -77,6 +77,3 @@ def incdec_codec(encoding):
 
 
 codecs.register(incdec_codec)
-print(b"a++ ++a a-- --a".decode('foo'))
-print(b"'a++ ++a a-- --a'".decode('foo'))
-print(b'"a++ ++a a-- --a"'.decode('foo'))
