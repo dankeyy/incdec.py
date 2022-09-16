@@ -67,9 +67,9 @@ class IncrementalDecoder(encodings.utf_8.IncrementalDecoder):
 
 
 def incdec_codec(encoding):
-    if encoding == "foo":
+    if encoding == "incdec":
         return codecs.CodecInfo(
-            name="foo",
+            name="incdec",
             encode=encodings.utf_8.encode,
             decode=decoder,
             incrementaldecoder=IncrementalDecoder,
