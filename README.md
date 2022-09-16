@@ -1,5 +1,11 @@
-# inc-dec-py
+# incdec.py
 C-style increment and decrement operators for python.
+
+🔴 Note- using this will override the call `x.__pos__().__pos__()` for `++x` 
+and `x.__neg__().__neg__()` for `--x`. 🔴\
+If, for some reason, you wish to achieve said predominant behaviour whilst using this cursed code, you can use `+(+x)` `-(-x)` respectively.\
+Also note the above doesn't apply to `x++`, `x--`, as those regularly raise `SyntaxError`.
+
 # Q&A:
 ### q: What
 a: this 
@@ -27,14 +33,14 @@ eventually i = -1
 ### q: How
 a: Remember the arguments when the walrus operator got merged? Well who's laughing now
 
-Essentially, all it takes is just a little bit of text replacement, from a++ to the most definitely valid py (>=3.8) expression `((a, a := a+1)[0])`. <br />
-Which, in a similar fashion to C's ++ operator, increments in place but gets evaluated as it was before the increment. <br />
-We achieve this by simply picking out the a from a tuple of itself and itself updated.<br />
+Essentially, all it takes is just a little bit of text replacement, from a++ to the most definitely valid py (>=3.8) expression `((a, a := a+1)[0])`.\
+Which, in a similar fashion to C's ++ operator, increments in place but gets evaluated as it was before the increment.\
+We achieve this by simply picking out the a from a tuple of itself and itself updated.\
 Do note that the exact same goes ++a, --a and a-- (just taking either the first or second element corresponding to the operator being prefix or postfix).
 
-### q: But how tf do you do text replacements, i thought python didn't have macros
-a: Ahhh, you see, python has the best macros. they're just hidden under the innocent looking encoding scheme. <br />
-Ever seen old python codes do stuff like `# -*- coding: utf-8 -*-`? <br />
+### q: But how tf do you do text replacements, I thought python didn't have macros
+a: Ahhh, you see, python has great macros, they're just hidden under the innocent looking encoding scheme.\
+Ever seen old python codes do stuff like `# -*- coding: utf-8 -*-`?\
 exactly. So what you can do is just implement a new [codec](https://docs.python.org/3/library/codecs.html#codecs.CodecInfo) with rules of your own, [register](https://docs.python.org/3/library/codecs.html#codecs.register) it to the interpreter, make it run at startup (i'll detail in a bit about placement of the file). This is important if like in the code above, it would usually raise a SyntaxError, so you gotta make it there before the parser.
 
 If you did that, voila, you got yourself whatever text replacement macros your heart desires.
