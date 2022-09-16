@@ -34,15 +34,15 @@ def transform(string, decode_mode):
 
     for line in string.splitlines(keepends=True):
         for pattern, replacement in zip(patterns, replacements):
-
             for match_obj in re.finditer(pattern, line):
                 captured ,= match_obj.groups()
+
                 if captured:
                     exact_pattern = captured.replace("+", "\+").replace("-", "\-")
                     symbol = captured.strip("-+")
                     line = re.sub(exact_pattern, replacement(symbol), line)
 
-        lines += line.encode() if not decode_mode else line #type: ignore
+        lines += line if decode_mode else line.encode()  #type: ignore
 
     return (lines, len(lines)) if decode_mode else lines
 
