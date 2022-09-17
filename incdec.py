@@ -7,11 +7,18 @@ import functools
 def transform(string, decode_mode):
     string = bytes(string).decode("utf-8")
 
-    postfix_pluses  = r"[^\W\d]\w*\+\+"
-    prefix_pluses   = r"\+\+[^\W\d]\w*"
-    postfix_minuses = r"[^\W\d]\w*\-\-"
-    prefix_minuses  = r"\-\-[^\W\d]\w*"
-    base_regexp = lambda doesnt_capture, captures: '["\'].*{}.*["\']|{}'.format(doesnt_capture, captures)
+    expr = r"[^\W\d]\w*"
+    pluses = r"\+\+"
+    minuses = r"\-\-"
+
+    postfix_pluses  = expr + pluses
+    postfix_minuses = expr + minuses
+
+    prefix_pluses  = pluses  + expr
+    prefix_minuses = minuses + expr
+
+    base_regexp = lambda doesnt_capture, captures: \
+        '["\'].*{}.*["\']|{}'.format(doesnt_capture, captures)
 
     patterns = [
         re.compile(base_regexp(doesnt_capture, captures))
@@ -69,6 +76,5 @@ def incdec_codec(encoding):
             decode=decoder,
             incrementaldecoder=IncrementalDecoder,
         )
-
 
 codecs.register(incdec_codec)
