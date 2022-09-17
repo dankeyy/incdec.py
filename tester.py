@@ -4,6 +4,8 @@ assert b"a++ ++a a-- --a".decode('incdec') == "((a, a := a+1)[0]) ((a, a := a+1)
 assert b"'a++ ++a a-- --a'".decode('incdec') == "'a++ ++a a-- --a'"
 assert b'"a++ ++a a-- --a"'.decode('incdec') == '"a++ ++a a-- --a"'
 
+assert b"++1".decode('incdec') == "++1"
+
 i = 6
 assert i-- == 6
 assert i == 5

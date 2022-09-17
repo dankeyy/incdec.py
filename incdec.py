@@ -7,10 +7,10 @@ import functools
 def transform(string, decode_mode):
     string = bytes(string).decode("utf-8")
 
-    postfix_pluses  = r"\w+\+\+"
-    prefix_pluses   = r"\+\+\w+"
-    postfix_minuses = r"\w+\-\-"
-    prefix_minuses  = r"\-\-\w+"
+    postfix_pluses  = r"[^\W\d]\w*\+\+"
+    prefix_pluses   = r"\+\+[^\W\d]\w*"
+    postfix_minuses = r"[^\W\d]\w*\-\-"
+    prefix_minuses  = r"\-\-[^\W\d]\w*"
     base_regexp = lambda doesnt_capture, captures: '["\'].*{}.*["\']|{}'.format(doesnt_capture, captures)
 
     patterns = [
