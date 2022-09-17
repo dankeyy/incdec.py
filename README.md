@@ -10,7 +10,7 @@ Also note the above doesn't apply to `x++`, `x--`, as those regularly raise `Syn
 ### q: What
 a: this 
 ```python
-#encoding: incdec
+#coding: incdec
 
 i = 6
 while i-- != 0:
