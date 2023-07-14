@@ -3,7 +3,7 @@ C-style increment and decrement operators for python.
 
 🔴 Note- using this will override the call `x.__pos__().__pos__()` for `++x` 
 and `x.__neg__().__neg__()` for `--x`. 🔴\
-If, for some reason, you wish to achieve said predominant behaviour whilst using this cursed code, you can use `+(+x)` `-(-x)` respectively.\
+If for some reason you do want regular plusplus or negneg then just wrap it one level up like so; `-(-x)`.\
 Also note the above doesn't apply to `x++`, `x--`, as those regularly raise `SyntaxError`.
 
 # Q&A:
